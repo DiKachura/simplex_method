@@ -1,9 +1,10 @@
 from tkinter import *
-import tkinter
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plt
 from pulp import *
 import numpy as np
+from sympy.solvers import solve
+from sympy import Symbol
 
 GUI = Tk()
 GUI.title("Simplex Method")
@@ -35,9 +36,6 @@ maximum = Label(GUI, text="max", font=font1)
 maximum.place(x=450, y=250)
 
 
-
-"""result = IntVar()
-result.set("(X,Y)")"""
 coeff_x = IntVar()
 coeff_y = IntVar()
 equal = IntVar()
@@ -202,15 +200,13 @@ def get():
 
     # Print the results
     print("Status: ", LpStatus[prob.status])
+
     vv=[]
-    vn=[]
     for v in prob.variables():
         vv.append(v.varValue)
         print(v.name, "=", v.varValue)
 
     print("The optimal value of the objective function is = ", value(prob.objective))
-
-
 
     # Plot the optimal solution
 
@@ -248,17 +244,34 @@ def get():
         plt.axvline(xf, label='Fmax')
 
 
+    yy=np.arange(0, 100)
+
+    if y<0:
+        plt.fill_between(xx, equal_result / y - x * xx / y, np.max(equal_result / y - x * xx / y), color = 'blue', alpha = 0.5)
+    elif y!=0:
+        plt.fill_between(xx, equal_result / y - x * xx / y, color = 'blue', alpha = 0.5)
+    else:
+        plt.fill_betweenx(yy, x,color='blue', alpha=0.5)
+    if y3<0:
+        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, np.max(equal_result3 / y3 - x3 * xx / y3), color='green', alpha=0.5)
+    elif y3!=0:
+        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, color='green', alpha=0.5)
+    else:
+        plt.fill_betweenx(yy, x3, color='blue', alpha=0.5)
+    if y2<0:
+        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, np.max(equal_result2 / y2 - x2 * xx / y2), color='orange', alpha=0.5)
+    elif y2!=0:
+        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, color='orange', alpha=0.5)
+    plt.fill_betweenx(yy, x2, color='blue', alpha=0.5)
+
+
     plt.axis([0, mx+10, 0, my+10])
     plt.grid(True)
     plt.legend()
     plt.show()
 
-
 b1 = ttk.Button(GUI, text="Solve", command= get)
 b1.place(x=250, y=350, anchor="center")
 
-
-"""result_label = Label(GUI, textvariable= result, font=font1)
-result_label.place(x=250, y=400, anchor="center")"""
-
 GUI.mainloop()
+
