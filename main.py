@@ -224,45 +224,48 @@ def get():
     Fmax = Label(GUI, text="Fmax({},{}) = {}".format(vv[0], vv[1], equal_resultf), font=font1)
     Fmax.place(x=100, y=300)
     if y!=0:
-        plt.plot(xx, equal_result / y - x * xx / y, label='{}x + {}y = {}'.format(x, y, equal_result))
+        plt.plot(xx, equal_result / y - x * xx / y, label='{}x + {}y = {}'.format(x, y, equal_result), color="purple")
     else:
-        plt.axvline(x, label='{}x + {}y = {}'.format(x, y, equal_result))
+        plt.axvline(x, label='{}x + {}y = {}'.format(x, y, equal_result), color="purple")
     if y2!=0:
-        plt.plot(xx, equal_result2 / y2 - x2 * xx / y2, label='{}x + {}y = {}'.format(x2, y2, equal_result2))
+        plt.plot(xx, equal_result2 / y2 - x2 * xx / y2, label='{}x + {}y = {}'.format(x2, y2, equal_result2), color="blue")
     else:
-        plt.axvline(x2, label='{}x + {}y = {}'.format(x2, y2, equal_result2))
+        plt.axvline(x2, label='{}x + {}y = {}'.format(x2, y2, equal_result2), color="blue")
     if y3!=0:
-        plt.plot(xx, equal_result3 / y3 - x3 * xx / y3, label='{}x + {}y = {}'.format(x3, y3, equal_result3))
+        plt.plot(xx, equal_result3 / y3 - x3 * xx / y3, label='{}x + {}y = {}'.format(x3, y3, equal_result3), color="orange")
     else:
-        plt.axvline(x3, label='{}x + {}y = {}'.format(x3, y3, equal_result3))
+        plt.axvline(x3, label='{}x + {}y = {}'.format(x3, y3, equal_result3), color="orange")
     #plt.plot([0, xf], [0, yf], label="C")
     if xf!=0:
-        plt.plot(xx, yf*xx/xf, label="C")
-        plt.plot(xx, equal_resultf / yf - xf * xx / yf, '--', label="Fmax")
+        plt.plot(xx, yf*xx/xf, label="C", color="green")
     else:
-        plt.axvline(xf, label='C')
-        plt.axvline(xf, label='Fmax')
+        plt.axvline(xf, label='C', color="green")
+    if yf!=0:
+        plt.plot(xx, equal_resultf / yf - xf * xx / yf, '--', label="Fmax", color="red")
+    else:
+        plt.axvline(xf, label='Fmax', color="red")
 
 
     yy=np.arange(0, 100)
 
     if y<0:
-        plt.fill_between(xx, equal_result / y - x * xx / y, np.max(equal_result / y - x * xx / y), color = 'blue', alpha = 0.5)
-    elif y!=0:
-        plt.fill_between(xx, equal_result / y - x * xx / y, color = 'blue', alpha = 0.5)
+        plt.fill_between(xx, equal_result / y - x * xx / y, 100, color="purple", alpha = 0.6)
+    elif y>0:
+        plt.fill_between(xx, equal_result / y - x * xx / y, color="purple", alpha = 0.6)
     else:
-        plt.fill_betweenx(yy, x,color='blue', alpha=0.5)
+        plt.fill_betweenx(yy, x, color="purple", alpha=0.6)
     if y3<0:
-        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, np.max(equal_result3 / y3 - x3 * xx / y3), color='green', alpha=0.5)
-    elif y3!=0:
-        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, color='green', alpha=0.5)
+        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, 100, color="orange", alpha=0.6)
+    elif y3>0:
+        plt.fill_between(xx, equal_result3 / y3 - x3 * xx / y3, color="orange", alpha=0.6)
     else:
-        plt.fill_betweenx(yy, x3, color='blue', alpha=0.5)
+        plt.fill_betweenx(yy, x3, color="orange", alpha=0.6)
     if y2<0:
-        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, np.max(equal_result2 / y2 - x2 * xx / y2), color='orange', alpha=0.5)
-    elif y2!=0:
-        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, color='orange', alpha=0.5)
-    plt.fill_betweenx(yy, x2, color='blue', alpha=0.5)
+        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, 100, color="blue", alpha=0.6)
+    elif y2>0:
+        plt.fill_between(xx, equal_result2 / y2 - x2 * xx / y2, color="blue", alpha=0.6)
+    else:
+        plt.fill_betweenx(yy, x2, color="blue", alpha=0.6)
 
 
     plt.axis([0, mx+10, 0, my+10])
